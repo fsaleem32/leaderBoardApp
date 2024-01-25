@@ -7,6 +7,7 @@ import AdminLoginPage from "./pages/AdminLoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function renderRoutes(role) {
+  console.log(role, 'role')
   switch (role) {
     case "admin":
       return (
@@ -17,7 +18,6 @@ function renderRoutes(role) {
           ></Route>
         </Routes>
       );
-      break;
     default:
       return (
         <Routes>
@@ -25,21 +25,21 @@ function renderRoutes(role) {
           <Route path="*" exact element={<NotFoundPage />}></Route>
         </Routes>
       );
-      break;
   }
 }
 
 function Main() {
-  const { state } = React.useContext(AuthContext);
-
+  const state = React.useContext(AuthContext);
+  console.log(React.useContext(AuthContext))
+  console.log(state, 'state')
   return (
     <div className="h-full">
       <div className="flex w-full">
         <div className="w-full">
           <div className="page-wrapper w-full py-10 px-5">
-            {!state.isAuthenticated
-              ? renderRoutes("none")
-              : renderRoutes(state.role)}
+            {state?.state.isAuthenticated
+              ? renderRoutes(state?.state?.user?.role)
+              : renderRoutes("none")}
           </div>
         </div>
       </div>
